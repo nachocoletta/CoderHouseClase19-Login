@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
+import multer from "multer";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -63,3 +65,23 @@ export class Exception extends Error {
     }
 };
 
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         const pathFile = path.join(__dirname, '../../public/productImages');
+//         cb(null, pathFile);
+//     },
+//     filename: (req, file, cb) => {
+//         const filename = `${Date.now()}-${file.originalname}`;
+//         cb(null, filename)
+//     }
+// })
+
+const storage = multer.diskStorage({
+    destination: './public/productImages',
+    filename: (req, file, cb) => {
+        const filename = `${Date.now()}-${file.originalname}`;
+        cb(null, filename);
+    }
+});
+
+export const uploader = multer({ storage })

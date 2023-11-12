@@ -1,7 +1,8 @@
 import { Router } from "express";
 import ProductManager from "../../dao/ProductManager.js";
-import productModel from "../../models/product.model.js";
+// import productModel from "../../models/product.model.js";
 import 'dotenv/config';
+import { uploader } from "../../helpers/utils.js";
 
 const router = Router();
 
@@ -59,16 +60,30 @@ router.get('/:pid', async (req, res) => {
 })
 
 
-router.post('/', async (req, res) => {
+router.post('/', uploader.array('thumbnails', 4), async (req, res) => {
     const { body } = req;
+    const { files } = req;
+    // console.log('entra a la ruta');
+    // console.log('Files:', req.files);
 
     try {
-        const product = await ProductManager.create(body);
-        res.status(201).json(product);
+        const product = await ProductManager.create(body, files);
+        res.redirect(`/products`)
+        // res.status(201).json(product);
     } catch (error) {
         res.status(error.statusCode || 500).json({ message: error.message });
     }
-})
+});
+// router.post('/', async (req, res) => {
+//     const { body } = req;
+
+//     try {
+//         const product = await ProductManager.create(body);
+//         res.status(201).json(product);
+//     } catch (error) {
+//         res.status(error.statusCode || 500).json({ message: error.message });
+//     }
+// })
 
 router.put('/:pid', async (req, res) => {
     const { pid } = req.params;

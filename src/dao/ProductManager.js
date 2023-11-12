@@ -29,9 +29,15 @@ export default class ProductManager {
         }
         return product;
     }
-    static async create(data) {
+    static async create(data, files) {
+        // console.log("data", data);
+        // console.log("files", files)
         try {
-            const product = await ProductModel.create(data);
+            const { title, description, code, price, stock, category } = data;
+            const product = await ProductModel.create({
+                title, description, code, price, stock, category,
+                thumbnails: files.map(file => file.path)
+            });
             console.log(`Producto creado exitosamente`);
             return product;
         } catch (error) {
@@ -39,6 +45,16 @@ export default class ProductManager {
             throw new Exception(`Ha ocurrido un error en el servidor`, 500)
         }
     }
+    // static async create(data) {
+    //     try {
+    //         const product = await ProductModel.create(data);
+    //         console.log(`Producto creado exitosamente`);
+    //         return product;
+    //     } catch (error) {
+    //         console.log(`Error: ${error.message}`);
+    //         throw new Exception(`Ha ocurrido un error en el servidor`, 500)
+    //     }
+    // }
 
     static async updateById(pid, data) {
         console.log(`id ${pid} data ${data}`)

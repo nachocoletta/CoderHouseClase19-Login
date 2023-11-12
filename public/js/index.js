@@ -166,9 +166,8 @@
             cart.products?.forEach((prod) => {
                 const productElement = document.createElement('div');
                 productElement.innerHTML = `<strong>productId:</strong> ${prod?.productId?._id}
-                <p><strong>title:</strong> ${prod?.productId?.title} <strong>price:</strong> $${prod.productId.price}</p>
-                <p><strong>stock:</strong> ${prod?.productId?.stock} <strong>category:</strong> ${prod.productId.category}</p>
-                <p><strong>code:</strong> ${prod?.productId?.code} <strong>quantity:</strong> ${prod.quantity}</p>`;
+                <strong>title:</strong> ${prod?.productId?.title} <strong>price:</strong> $${prod.productId.price} <strong>stock:</strong> ${prod?.productId?.stock} <strong>category:</strong> ${prod.productId.category} 
+                <strong>code:</strong> ${prod?.productId?.code} <strong>quantity:</strong> ${prod.quantity}`;
 
                 cartElement.appendChild(productElement);
             });

@@ -1,3 +1,22 @@
+
+ <article>
+  <header>
+      <h1>Bienvenido <strong>{{user.first_name}} {{user.last_name}}</strong></h1>
+  </header>
+  <p>Nombre: {{user.first_name}}</p>
+  <p>Apellido: {{user.last_name}}</p>
+  <p>Correo: {{user.email}}</p>
+  <p>Tipo de Usuario: <strong>{{user.rol}}</strong> </p>
+  <footer>
+    <a href="/api/sessions/logout" role="button">Logout</a>
+  </footer>
+</article>
+  
+  
+  
+    
+
+
 <h1>Productos Paginados</h1>
 <table id="main" role="grid">
 <tr>
@@ -22,6 +41,14 @@
     <td>{{this.category}}</td>
     <td><input type="text" id={{this._id}} style="width: 300px;"></td>
     <td><button id={{this._id}} class="boton">ADD</button></td>
+    <td>
+             {{#if this.thumbnails}}
+               <img src="productImages/1699796720180-plastica.jpeg" alt="no-image" />
+             {{else}}
+              <!-- Handle the case where thumbnails are undefined or empty -->
+                No Image
+              {{/if}}
+            </td>
   </tr>
   {{/each}}
 </table>
@@ -42,26 +69,31 @@
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <!-- Columna 1 -->
         <div style="flex: 1;">
-          <form id="form-add-product">
+          <form action="/api/products" method="post" enctype="multipart/form-data">
             <h1>Create Product</h1>
-            <label for="input-title">Title:</label>
-            <input type="text" id="input-title" name="title" required>
+            <label for="title">Title:</label>
+            <input type="text"  name="title" required>
 
-            <label for="input-description">Description:</label>
-            <input type="text" id="input-description" name="description">
+            <label for="description">Description:</label>
+            <input type="text"  name="description">
 
-            <label for="input-code">Code:</label>
-            <input type="text" id="input-code" name="code" required>
+            <label for="code">Code:</label>
+            <input type="text"  name="code" required>
 
-            <label for="input-price">Price:</label>
-            <input type="text" id="input-price" name="price" required>
+            <label for="price">Price:</label>
+            <input type="number"  name="price" required>
 
-            <label for="input-stock">Stock:</label>
-            <input type="text" id="input-stock" name="stock" required>
+            <label for="stock">Stock:</label>
+            <input type="number"  name="stock" required>
 
-            <label for="input-category">Category:</label>
-            <input type="text" id="input-category" name="category" required>
-            <button type="submit">Create</button>
+            <label for="category">Category:</label>
+            <input type="text"  name="category" required>
+            
+            
+            <input type="file" name="thumbnails" multiple>
+            <input type="submit">Create</input>
+
+
           </form>
         </div>
         <!-- Columna 2 -->

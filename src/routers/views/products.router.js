@@ -6,14 +6,22 @@ import ProductManager from "../../dao/ProductManager.js";
 
 
 const router = Router();
-
+const privateRouter = (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    next();
+};
 const buildResponse = (data, req) => {
 
     const { category } = req.query
 
+    console.log(req.session.user);
     if (category) {
         return {
+            title: "Products",
             status: "success",
+            user: req.session.user,
             payload: data.docs.map(product => product.toJSON()),
             totalPages: data.totalPages,
             prevPage: data.prevPage,
@@ -26,7 +34,9 @@ const buildResponse = (data, req) => {
         };
     }
     return {
+        title: "Products",
         status: "success",
+        user: req.session.user,
         payload: data.docs.map(product => product.toJSON()),
         totalPages: data.totalPages,
         prevPage: data.prevPage,
@@ -52,9 +62,9 @@ const buildPageLink = (req, page, limit, sort, category) => {
 //     const products = await ProductManager.get()
 //     res.status(200).json(products);
 // })
-router.get('/', async (req, res) => {
+router.get('/', privateRouter, async (req, res) => {
     try {
-        const { page = 1, limit = 3, category, code, price, title, sort, stock } = req.query;
+        const { page = 1, limit = 10, category, code, price, title, sort, stock } = req.query;
         const options = {
             page,
             limit,
@@ -80,17 +90,7 @@ router.get('/', async (req, res) => {
         if (stock) {
             console.log("stock", stock);
         }
-        // if (sort) {
-        //     if (sort === 'asc') {
-        //         // criteria.sort = 
-        //         console.log('ascendente');
-        //     }
-        //     if (sort === 'desc') {
-        //         console.log('descendente');
-        //     }
-        // }
-        // console.log("criteria", criteria)
-        // const result = await productModel.paginate(criteria, options)
+
         const result = await ProductManager.get(criteria, options)
 
         res.render('products', buildResponse(result, req))
