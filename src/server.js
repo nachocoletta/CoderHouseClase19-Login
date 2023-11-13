@@ -7,7 +7,7 @@ import 'dotenv/config';
 // await init();
 
 // const server = http.createServer(app);
-const SERVER_PORT = process.env.SERVER_PORT;
+const SERVER_PORT = process.env.SERVER_PORT || 8080;
 
 
 const httpServer = app.listen(SERVER_PORT, () => {
