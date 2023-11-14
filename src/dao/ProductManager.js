@@ -36,25 +36,30 @@ export default class ProductManager {
             const { title, description, code, price, stock, category } = data;
             const product = await ProductModel.create({
                 title, description, code, price, stock, category,
-                thumbnails: files.map(file => file.path)
+                thumbnails: files.map(file => file.filename)
             });
-            console.log(`Producto creado exitosamente`);
+            console.log(`Producto creado exitosamente ${product}`);
             return product;
         } catch (error) {
             console.log(`Error: ${error.message}`);
             throw new Exception(`Ha ocurrido un error en el servidor`, 500)
         }
     }
-    // static async create(data) {
+    // static async create(data, files) {
     //     try {
-    //         const product = await ProductModel.create(data);
-    //         console.log(`Producto creado exitosamente`);
+    //         const { title, description, code, price, stock, category } = data;
+    //         const thumbnails = files.map(file => `./productImages/${file.originalname}`);
+    //         const product = await ProductModel.create({
+    //             title, description, code, price, stock, category, thumbnails
+    //         });
+    //         console.log(`Producto creado exitosamente ${product}`);
     //         return product;
     //     } catch (error) {
     //         console.log(`Error: ${error.message}`);
     //         throw new Exception(`Ha ocurrido un error en el servidor`, 500)
     //     }
     // }
+
 
     static async updateById(pid, data) {
         console.log(`id ${pid} data ${data}`)

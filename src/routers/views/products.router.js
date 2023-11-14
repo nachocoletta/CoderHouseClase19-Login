@@ -16,7 +16,7 @@ const buildResponse = (data, req) => {
 
     const { category } = req.query
 
-    console.log(req.session.user);
+    // console.log(req.session.user);
     if (category) {
         return {
             title: "Products",

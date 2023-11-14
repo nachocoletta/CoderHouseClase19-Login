@@ -44,7 +44,7 @@ jspm_packages/
 
 #images 
 
-productImages/
+#productImages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

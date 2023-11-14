@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
 import multer from "multer";
+import { log } from "console";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -76,11 +77,21 @@ export class Exception extends Error {
 //     }
 // })
 
+
+// const storage = multer.diskStorage({
+//     destination: './public/productImages',
+//     filename: (req, file, cb) => {
+//         console.log(file)
+//         const filename = file.path;
+//         cb(null, filename);
+//     }
+// });
+
 const storage = multer.diskStorage({
     destination: './public/productImages',
     filename: (req, file, cb) => {
         const filename = `${Date.now()}-${file.originalname}`;
-        cb(null, filename);
+        cb(null, filename.replace(/\\/g, "/")); // Reemplazar barras invertidas con barras normales
     }
 });
 

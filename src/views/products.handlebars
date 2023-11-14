@@ -29,6 +29,7 @@
     <th>Category</th>
     <th>Cart</th>
     <th>ADD</th>
+    <th>IMAGES</th>
   </tr>
   {{#each payload}}
   <tr>
@@ -42,13 +43,15 @@
     <td><input type="text" id={{this._id}} style="width: 300px;"></td>
     <td><button id={{this._id}} class="boton">ADD</button></td>
     <td>
-             {{#if this.thumbnails}}
-               <img src="productImages/1699796720180-plastica.jpeg" alt="no-image" />
-             {{else}}
-              <!-- Handle the case where thumbnails are undefined or empty -->
-                No Image
-              {{/if}}
-            </td>
+  {{#if this.thumbnails}}
+    {{#each this.thumbnails}}
+      <img src="./productImages/{{this}}" alt="no-image"/>
+    {{/each}}
+  {{else}}
+    <!-- Handle the case where thumbnails are undefined or empty -->
+    No Image
+  {{/if}}
+</td>
   </tr>
   {{/each}}
 </table>
